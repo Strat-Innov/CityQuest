@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Component classes ported from the original prototype (index.html) so the
+ * visual identity is preserved exactly. Prefer these over ad-hoc utilities
+ * for anything that existed in the prototype.
+ */
+@layer base {
+  body {
+    @apply bg-backdrop font-sans text-ink antialiased;
+  }
+}
+
+@layer components {
+  .phone {
+    @apply relative mx-auto my-4 min-h-[760px] w-full max-w-[400px] overflow-hidden rounded-[32px] shadow-phone;
+    background: linear-gradient(160deg, #ebe7f8, #f7f5fc 55%, #ece8f8);
+  }
+  @media (max-width: 440px) {
+    .phone {
+      @apply my-0 min-h-screen rounded-none shadow-none;
+    }
+  }
+
+  .h1 { @apply text-[30px] font-bold tracking-[-0.02em]; }
+  .lead { @apply mt-1.5 text-[15px] leading-normal text-muted; }
+  .eyebrow { @apply text-xs font-semibold uppercase tracking-[0.12em] text-muted; }
+
+  .card {
+    @apply mt-5 rounded-[22px] border border-white/90 bg-white/70 p-5 shadow-card backdrop-blur-md;
+  }
+  .stop-card {
+    @apply flex-1 rounded-[18px] border border-white/90 bg-white/70 px-4 py-3.5 shadow-stop;
+  }
+
+  .pill { @apply whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-semibold; }
+  .pill-ready { @apply bg-green-soft text-green; }
+  .pill-used { @apply bg-[#eee] text-muted; }
+  .pill-lock { @apply border border-line bg-transparent text-muted; }
+  .pill-blue { @apply bg-blue-soft text-blue; }
+
+  .btn {
+    @apply mt-3 inline-flex w-full cursor-pointer items-center justify-center rounded-full border-0 bg-blue px-4 py-2.5 text-sm font-semibold text-white;
+  }
+  .btn:focus-visible { @apply outline outline-2 outline-offset-2 outline-ink; }
+  .btn:disabled { @apply cursor-not-allowed bg-line text-muted; }
+  .btn-ghost { @apply border border-blue-soft bg-white text-blue; }
+  .btn-danger { @apply bg-danger text-white; }
+
+  .ico {
+    @apply grid h-12 w-12 flex-none place-items-center rounded-xl bg-white text-blue;
+  }
+
+  .field-label { @apply mt-4 block text-sm font-semibold; }
+  .field {
+    @apply mt-2 w-full rounded-[14px] border-[1.5px] border-line bg-white px-3.5 py-3 text-base;
+  }
+  .field:focus { @apply border-blue outline-none; }
+  .field-error { @apply mt-1.5 text-[13px] text-danger; }
+  .hint { @apply mt-2 text-[13px] text-muted; }
+
+  .link-subtle {
+    @apply mx-auto mt-5 block cursor-pointer border-0 bg-transparent text-[13px] text-muted underline;
+  }
+
+  .code-box {
+    @apply mt-4 rounded-2xl border-2 border-dashed border-blue p-[18px] text-center font-mono text-[28px] font-bold tracking-[0.15em] text-blue;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@keyframes sheet-up {
+  from { transform: translateY(40px); opacity: 0; }
+}
+.animate-sheet-up { animation: sheet-up 0.25s ease; }
