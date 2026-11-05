@@ -77,7 +77,13 @@ For booth staff, use `role = 'staff'`. To revoke access, use `role = 'participan
 
 1. Push this repository to GitHub, then in Vercel choose **Add New → Project** and import it.
    The framework is detected as Next.js; keep the default build settings.
-2. Under **Settings → Environment Variables**, add the variables from `.env.example` for
+2. **If you connected the Vercel ↔ Supabase integration**, it has already created
+   `NEXT_PUBLIC_SUPABASE_URL` and a key (`NEXT_PUBLIC_SUPABASE_ANON_KEY` or
+   `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`). The app accepts either key name, so don't add them again.
+   `NEXT_PUBLIC_SITE_URL` defaults to the project's Vercel production domain. Set it explicitly
+   once you use a custom domain.
+
+   Otherwise, under **Settings → Environment Variables**, add the variables from `.env.example` for
    **Production** (and **Preview** if you use preview deployments):
 
    ```
@@ -89,7 +95,9 @@ For booth staff, use `role = 'staff'`. To revoke access, use `role = 'participan
    PRIVACY_CONTACT_EMAIL=...
    DATA_RETENTION_DAYS=90
    ```
-3. Deploy. If a variable is missing, the first request fails with a message naming it.
+3. Choose the **Config** type (not Secret) for `NEXT_PUBLIC_*` variables. They are public by design.
+4. Deploy (or **Redeploy** after changing variables, because `NEXT_PUBLIC_*` values are fixed at build
+   time). If something is missing, the site shows a setup page naming the variables to fix.
 
 ### Production domain
 
