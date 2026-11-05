@@ -19,6 +19,14 @@ export type AppEnv = z.infer<typeof envSchema>;
 
 let cached: AppEnv | undefined;
 
+/** Thrown when required configuration is missing; lists variable names only, never values. */
+export class EnvConfigError extends Error {
+  constructor(readonly variables: string[]) {
+    super(`Missing or invalid environment variables: ${variables.join(", ")}. See .env.example.`);
+    this.name = "EnvConfigError";
+  }
+}
+
 /**
  * Validated environment. Read lazily so `next build` succeeds without
  * credentials; the first request fails fast with a clear message instead.
@@ -35,10 +43,7 @@ export function getEnv(): AppEnv {
     DATA_RETENTION_DAYS: process.env.DATA_RETENTION_DAYS || undefined,
   });
   if (!parsed.success) {
-    const names = [...new Set(parsed.error.issues.map((issue) => issue.path.join(".")))];
-    throw new Error(
-      `Missing or invalid environment variables: ${names.join(", ")}. See .env.example.`,
-    );
+    throw new EnvConfigError([...new Set(parsed.error.issues.map((issue) => issue.path.join(".")))]);
   }
   cached = parsed.data;
   return cached;
